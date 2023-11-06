@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { SignUpRequestDto } from './dto/signUp.request.dto';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/common/decorators/user.decorator';
 
 @ApiTags('Users')
 @Controller('v1/users')
@@ -9,8 +10,8 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
   @ApiOperation({ summary: '유저 목록' })
   @Get()
-  getUsers(@Req() req) {
-    return req.user;
+  getUsers(@User() user) {
+    return user;
   }
 
   @ApiOperation({ summary: '회원가입' })
@@ -26,7 +27,6 @@ export class UsersController {
     description: '유저 id',
   })
   @Get(':id')
-  //   getUser(@Query('perPage') pgwgw) {}
   getUser(@Param() param) {
     this.usersService.getUser();
     console.log(param.id);
