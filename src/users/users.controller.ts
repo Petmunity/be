@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import { SignUpRequestDto } from './dto/signUp.request.dto';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/common/decorators/user.decorator';
+import { UndefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
 
+@UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('Users')
 @Controller('v1/users')
 export class UsersController {
