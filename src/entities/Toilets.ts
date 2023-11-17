@@ -12,19 +12,19 @@ import {
 import { Pets } from './Pets';
 
 enum ToiletType {
-  feces,
-  urine,
+  feces = 'feces',
+  urine = 'urine',
 }
 
 enum WeightClassification {
-  low,
-  medium,
-  high,
+  low = 'log',
+  medium = 'medium',
+  high = 'high',
 }
 
-@Entity({ schema: 'Petmmuity', name: 'toilets' })
+@Entity({ schema: 'Petmmunity', name: 'toilets' })
 export class Toilets {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Pets, (pet) => pet.Toilets, {

@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { Pets } from './Pets';
 
-@Entity({ schema: 'Petmmuity', name: 'walks' })
+@Entity({ schema: 'Petmmunity', name: 'walks' })
 export class Walks {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Pets, (pet) => pet.Walks, {

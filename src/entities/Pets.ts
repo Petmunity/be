@@ -17,18 +17,18 @@ import { Showers } from './Showers';
 import { Customs } from './Customs';
 
 enum PetType {
-  dog,
-  cat,
+  dog = 'dog',
+  cat = 'cat',
 }
 
 enum PetGender {
-  male,
-  female,
+  male = 'male',
+  female = 'female',
 }
 
-@Entity({ schema: 'Petmmuity', name: 'pets' })
+@Entity({ schema: 'Petmmunity', name: 'pets' })
 export class Pets {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Groups, (group) => group.Pets, {

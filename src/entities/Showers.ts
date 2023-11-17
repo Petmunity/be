@@ -16,9 +16,9 @@ enum ShowerType {
   shower,
 }
 
-@Entity({ schema: 'Petmmuity', name: 'showers' })
+@Entity({ schema: 'Petmmunity', name: 'showers' })
 export class Showers {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Pets, (pet) => pet.Showers, {

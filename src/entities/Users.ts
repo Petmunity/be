@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { Groups } from './Groups';
 
-@Entity({ schema: 'Petmmuity', name: 'users' })
+@Entity({ schema: 'Petmmunity', name: 'users' })
 export class Users {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Groups, (group) => group.Users, {

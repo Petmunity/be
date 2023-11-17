@@ -16,9 +16,9 @@ enum MealType {
   snack,
 }
 
-@Entity({ schema: 'Petmmuity', name: 'meals' })
+@Entity({ schema: 'Petmmunity', name: 'meals' })
 export class Meals {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @ManyToOne(() => Pets, (pet) => pet.Meals, {

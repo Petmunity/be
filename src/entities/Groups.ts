@@ -9,9 +9,9 @@ import {
 import { Pets } from './Pets';
 import { Users } from './Users';
 
-@Entity({ schema: 'Petmmuity', name: 'Groups' })
+@Entity({ schema: 'Petmmunity', name: 'Groups' })
 export class Groups {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id ' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @OneToMany(() => Pets, (pets) => pets.Group)
