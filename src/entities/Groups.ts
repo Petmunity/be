@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Pets } from './Pets';
+import { Users } from './Users';
 
 @Entity({ schema: 'Petmmuity', name: 'Groups' })
 export class Groups {
@@ -15,6 +16,9 @@ export class Groups {
 
   @OneToMany(() => Pets, (pets) => pets.Group)
   Pets: Pets[];
+
+  @OneToMany(() => Users, (users) => users.Group)
+  Users: Users[];
 
   @CreateDateColumn()
   createdAt: Date;
