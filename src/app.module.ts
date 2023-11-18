@@ -32,6 +32,7 @@ import { Customs } from './entities/Customs';
       logging: true,
       charset: 'utf8mb4',
     }),
+    TypeOrmModule.forFeature([Users]),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, UsersService],

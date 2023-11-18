@@ -27,8 +27,12 @@ export class UsersController {
 
   @ApiOperation({ summary: '회원가입' })
   @Post()
-  postSignUp(@Body() data: SignUpRequestDto) {
-    this.usersService.postSignUp(data);
+  async postSignUp(@Body() body: SignUpRequestDto) {
+    await this.usersService.postSignUp(
+      body.email,
+      body.password,
+      body.nickname,
+    );
   }
 
   @ApiOperation({ summary: '유저 상세' })

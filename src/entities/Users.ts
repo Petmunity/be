@@ -9,6 +9,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Groups } from './Groups';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 @Entity({ schema: 'Petmmunity', name: 'users' })
 export class Users {
@@ -22,12 +24,32 @@ export class Users {
   @JoinColumn([{ name: 'group_id', referencedColumnName: 'id' }])
   Group: Groups;
 
-  @Column('varchar', { name: 'username', unique: true, length: 30 })
-  username: string;
+  @IsEmail()
+  @ApiProperty({
+    example: 'test@naver.com',
+    description: '이메일',
+    required: true,
+  })
+  @Column('varchar', { name: 'email', unique: true, length: 30 })
+  email: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'password',
+    description: '비밀번호',
+    required: true,
+  })
   @Column('varchar', { name: 'password' })
   password: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'test',
+    description: '닉네임',
+    required: true,
+  })
   @Column('varchar', { name: 'nickname', unique: true, length: 30 })
   nickname: string;
 
