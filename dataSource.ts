@@ -1,13 +1,14 @@
 import { DataSource } from 'typeorm';
-import dotenv from 'dotenv';
-import { Users } from 'src/entities/Users';
-import { Pets } from 'src/entities/Pets';
-import { Groups } from 'src/entities/Groups';
-import { Meals } from 'src/entities/Meals';
-import { Showers } from 'src/entities/Showers';
-import { Toilets } from 'src/entities/Toilets';
-import { Walks } from 'src/entities/Walks';
-import { Customs } from 'src/entities/Customs';
+import * as dotenv from 'dotenv';
+
+import { Customs } from './src/entities/Customs';
+import { Users } from './src/entities/Users';
+import { Pets } from './src/entities/Pets';
+import { Groups } from './src/entities/Groups';
+import { Meals } from './src/entities/Meals';
+import { Showers } from './src/entities/Showers';
+import { Toilets } from './src/entities/Toilets';
+import { Walks } from './src/entities/Walks';
 
 dotenv.config();
 

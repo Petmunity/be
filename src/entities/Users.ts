@@ -22,8 +22,14 @@ export class Users {
   @JoinColumn([{ name: 'group_id', referencedColumnName: 'id' }])
   Group: Groups;
 
-  @Column('varchar', { name: 'username', unique: false, length: 30 })
+  @Column('varchar', { name: 'username', unique: true, length: 30 })
   username: string;
+
+  @Column('varchar', { name: 'password' })
+  password: string;
+
+  @Column('varchar', { name: 'nickname', unique: true, length: 30 })
+  nickname: string;
 
   @CreateDateColumn()
   createdAt: Date;
