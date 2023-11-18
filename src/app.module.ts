@@ -14,9 +14,11 @@ import { Showers } from './entities/Showers';
 import { Toilets } from './entities/Toilets';
 import { Walks } from './entities/Walks';
 import { Customs } from './entities/Customs';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     TypeOrmModule.forRoot({
