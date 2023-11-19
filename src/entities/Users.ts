@@ -53,6 +53,9 @@ export class Users {
   @Column('varchar', { name: 'nickname', unique: true, length: 30 })
   nickname: string;
 
+  @Column('boolean', { name: 'isOnboarding', default: false })
+  isOnboarding: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
