@@ -12,7 +12,9 @@ export class UsersService {
   ) {}
 
   async postSignUp(email: string, password: string, nickname: string) {
-    const user = await this.usersRepository.findOne({ where: { email } });
+    const user = await this.usersRepository.findOne({
+      where: { username: email },
+    });
 
     if (user) {
       throw new ForbiddenException('이미 존재하는 이메일입니다.');

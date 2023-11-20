@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -5,12 +7,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Groups } from './Groups';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Provider } from 'src/common/types';
 
 @Entity({ schema: 'Petmmunity', name: 'users' })
 export class Users {
@@ -24,24 +26,25 @@ export class Users {
   @JoinColumn([{ name: 'group_id', referencedColumnName: 'id' }])
   Group: Groups;
 
-  @IsEmail()
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
-    example: 'test@naver.com',
-    description: '이메일',
+    example: '홍길동',
+    description: '사용자 이름',
     required: true,
   })
-  @Column('varchar', { name: 'email', unique: true, length: 30 })
-  email: string;
+  @Column('varchar', { name: 'username' })
+  username: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'password',
-    description: '비밀번호',
+    example: '홍길동',
+    description: '화면에 보이는 사용자 이름',
     required: true,
   })
-  @Column('varchar', { name: 'password' })
-  password: string;
+  @Column('varchar', { name: 'displayName' })
+  displayName: string;
 
   @IsString()
   @IsNotEmpty()
@@ -50,8 +53,27 @@ export class Users {
     description: '닉네임',
     required: true,
   })
-  @Column('varchar', { name: 'nickname', unique: true, length: 30 })
+  @Column('varchar', { name: 'nickname' })
   nickname: string;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'kakao',
+    description: '소셜 로그인 종류',
+    required: true,
+  })
+  @Column({
+    type: 'enum',
+    enum: Provider,
+    default: 'kakao',
+    name: 'provider',
+  })
+  provider: Provider;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column('varchar', { name: 'socialId' })
+  socialId: string;
 
   @Column('boolean', { name: 'isOnboarding', default: false })
   isOnboarding: boolean;

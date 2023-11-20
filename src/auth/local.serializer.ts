@@ -22,7 +22,7 @@ export class LocalSerializer extends PassportSerializer {
     return await this.userRepository
       .findOneOrFail({
         where: { id: +userId },
-        select: ['id', 'email', 'nickname'],
+        select: ['id', 'nickname'],
       })
       .then((user) => {
         console.log(user, user);

@@ -23,9 +23,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.use(passport.initialize());
-  app.use(passport.session());
+  // app.use(passport.session());
   await app.listen(port);
-  console.log('PORT 3000 - 서버 실행중입니다.');
+  console.log(`PORT ${port} - 서버 실행중입니다.`);
 
   if (module.hot) {
     module.hot.accept();

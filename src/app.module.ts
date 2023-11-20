@@ -1,20 +1,20 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { Customs } from './entities/Customs';
+import { Groups } from './entities/Groups';
+import { Meals } from './entities/Meals';
+import { Pets } from './entities/Pets';
+import { Showers } from './entities/Showers';
+import { Toilets } from './entities/Toilets';
+import { Users } from './entities/Users';
+import { Walks } from './entities/Walks';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from './entities/Users';
-import { Pets } from './entities/Pets';
-import { Groups } from './entities/Groups';
-import { Meals } from './entities/Meals';
-import { Showers } from './entities/Showers';
-import { Toilets } from './entities/Toilets';
-import { Walks } from './entities/Walks';
-import { Customs } from './entities/Customs';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
