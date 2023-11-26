@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
@@ -8,13 +9,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 import { LoggedInGuard } from 'src/auth/logged-in-guard';
 import { User } from 'src/common/decorators/user.decorator';
 import { UndefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
 import { UsersService } from './users.service';
+import { NotLoggedInGuard } from 'src/auth/not-logged-in-guard';
+import { SignUpRequestDto } from './dto/signUp.request.dto';
 
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('Users')
@@ -28,16 +30,16 @@ export class UsersController {
     return user;
   }
 
-  // @UseGuards(new NotLoggedInGuard())
-  // @ApiOperation({ summary: '회원가입' })
-  // @Post()
-  // async postSignUp(@Body() body: SignUpRequestDto) {
-  //   await this.usersService.postSignUp(
-  //     body.email,
-  //     body.password,
-  //     body.nickname,
-  //   );
-  // }
+  @UseGuards(new NotLoggedInGuard())
+  @ApiOperation({ summary: '회원가입' })
+  @Post()
+  async postSignUp(@Body() body: SignUpRequestDto) {
+    // await this.usersService.postSignUp(
+    //   body.email,
+    //   body.password,
+    //   body.nickname,
+    // );
+  }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '유저 상세' })
@@ -63,19 +65,5 @@ export class UsersController {
   postLogout(@Req() req, @Res() res) {
     res.logout();
     res.send('ok');
-  }
-
-  @Get('kakao')
-  @UseGuards(AuthGuard('kakao'))
-  kakaoLogin() {}
-
-  @Get('kakao/callback')
-  @UseGuards(AuthGuard('kakao'))
-  kakaoLoginCallback(@Req() req) {
-    return {
-      accessToekn: req?.accessToken,
-      refreshToken: req?.refreshToken,
-      message: 'Kakao login success',
-    };
   }
 }

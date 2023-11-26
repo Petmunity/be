@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
+import { ProviderEnumType } from 'src/common/types';
 import {
   Column,
   CreateDateColumn,
@@ -7,12 +8,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Groups } from './Groups';
-import { Provider } from 'src/common/types';
 
 @Entity({ schema: 'Petmmunity', name: 'users' })
 export class Users {
@@ -64,11 +63,11 @@ export class Users {
   })
   @Column({
     type: 'enum',
-    enum: Provider,
+    enum: ProviderEnumType,
     default: 'kakao',
     name: 'provider',
   })
-  provider: Provider;
+  provider: ProviderEnumType;
 
   @IsString()
   @IsNotEmpty()

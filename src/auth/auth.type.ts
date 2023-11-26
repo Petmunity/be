@@ -1,5 +1,7 @@
+import { ProviderEnumType } from 'src/common/types';
+
 export interface KakaoProfile {
-  provider: 'kakao';
+  provider: ProviderEnumType;
   id: number;
   username: string;
   displayName: string;

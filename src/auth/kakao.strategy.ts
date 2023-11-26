@@ -1,22 +1,15 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-kakao';
-import { ConfigService } from '@nestjs/config';
+import { AuthService } from './auth.service';
 import { KakaoProfile } from './auth.type';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from 'src/entities/Users';
-import { Repository } from 'typeorm';
-import { Provider } from 'src/common/types';
 
 @Injectable()
 export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
-  constructor(
-    private readonly configService: ConfigService,
-    @InjectRepository(Users) private userRepository: Repository<Users>,
-  ) {
+  constructor(private readonly authService: AuthService) {
     super({
-      clientID: configService.get('KAKAO_CLIENT_ID'),
-      callbackURL: configService.get('KAKAO_CALLBACK_URL'),
+      clientID: process.env.KAKAO_CLIENT_ID,
+      callbackURL: process.env.KAKAO_CALLBACK_URL,
     });
   }
 
@@ -26,29 +19,10 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     profile: KakaoProfile,
     done: CallableFunction,
   ) {
-    const {
-      id,
-      username,
-      displayName,
-      _json: {
-        properties: { nickname },
-      },
-    } = profile;
-    const user = await this.userRepository.findOne({
-      where: { socialId: String(id) },
-    });
-    if (user) {
-      throw new UnauthorizedException('이미 존재하는 사용자입니다');
-    }
-
-    await this.userRepository.save({
-      socialId: String(id),
-      provider: Provider.kakao,
-      nickname,
-      username,
-      displayName,
-    });
-
-    done(null, { user, accessToken, refreshToken });
+    console.log('profile', profile);
+    console.log('accessToken', accessToken);
+    console.log('refreshToekn', refreshToken);
+    const user = await this.authService.validateKakaoUser(profile);
+    done(null, user, accessToken, refreshToken);
   }
 }
