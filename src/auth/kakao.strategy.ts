@@ -19,10 +19,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     profile: KakaoProfile,
     done: CallableFunction,
   ) {
-    console.log('profile', profile);
-    console.log('accessToken', accessToken);
-    console.log('refreshToekn', refreshToken);
     const user = await this.authService.validateKakaoUser(profile);
-    done(null, user, accessToken, refreshToken);
+    done(null, user);
   }
 }

@@ -1,8 +1,12 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from './auth.service';
+import { Users } from 'src/entities/Users';
 
 @Controller('auth')
 export class AuthController {
+  constructor(private authService: AuthService) {}
+
   @Get('kakao')
   @UseGuards(AuthGuard('kakao'))
   async kakaoLogin() {
@@ -13,9 +17,11 @@ export class AuthController {
   @Get('kakao/callback')
   @UseGuards(AuthGuard('kakao'))
   async kakaoLoginCallback(@Req() req, @Res() res) {
-    console.log('req', req);
-    const accessToken = req.user.accessToken;
-    // 이 부분은 Kakao 로그인 완료 후 호출됩니다.
-    return 'Kakao login success';
+    const user = req.user as Users;
+    const accessToken = await this.authService.generateAccessToken(user?.id);
+    const refreshToken = await this.authService.generateRefreshToken(user?.id);
+
+    res.json({ accessToken, refreshToken, message: 'success' });
+    res.redirect('http://localhost:3000/');
   }
 }

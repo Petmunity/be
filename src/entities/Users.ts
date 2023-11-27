@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsJWT, IsNotEmpty, IsString } from 'class-validator';
 import { ProviderEnumType } from 'src/common/types';
 import {
   Column,
@@ -71,11 +71,16 @@ export class Users {
 
   @IsString()
   @IsNotEmpty()
-  @Column('varchar', { name: 'socialId' })
+  @Column('varchar', { name: 'socialId', unique: true })
   socialId: string;
 
   @Column('boolean', { name: 'isOnboarding', default: false })
   isOnboarding: boolean;
+
+  @IsString()
+  @IsJWT()
+  @Column('varchar', { name: 'refreshToken', unique: true, nullable: true })
+  refreshToken?: string;
 
   @CreateDateColumn()
   createdAt: Date;
