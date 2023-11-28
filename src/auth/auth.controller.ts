@@ -2,10 +2,16 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Users } from 'src/entities/Users';
+import { Response } from 'express';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    @InjectRepository(Users) private usersRepository: Repository<Users>,
+  ) {}
 
   @Get('kakao')
   @UseGuards(AuthGuard('kakao'))
@@ -16,12 +22,22 @@ export class AuthController {
 
   @Get('kakao/callback')
   @UseGuards(AuthGuard('kakao'))
-  async kakaoLoginCallback(@Req() req, @Res() res) {
+  async kakaoLoginCallback(@Req() req, @Res() res: Response) {
     const user = req.user as Users;
-    const accessToken = await this.authService.generateAccessToken(user?.id);
-    const refreshToken = await this.authService.generateRefreshToken(user?.id);
+    const { accessToken } = await this.authService.generateAccessToken(
+      user?.id,
+    );
+    const { refreshToken } = await this.authService.generateRefreshToken(
+      user?.id,
+    );
 
-    res.json({ accessToken, refreshToken, message: 'success' });
-    res.redirect('http://localhost:3000/');
+    res.cookie('accessToken', accessToken);
+    res.cookie('refreshToken', refreshToken);
+
+    if (user?.isOnboarding) {
+      res.redirect('http://localhost:3000/');
+    } else {
+      res.redirect('http://localhost:3000/onboarding');
+    }
   }
 }

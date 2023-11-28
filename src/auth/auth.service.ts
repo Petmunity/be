@@ -28,23 +28,23 @@ export class AuthService {
       where: { socialId: String(id) },
     });
 
-    if (user) {
-      throw new UnauthorizedException('이미 존재하는 사용자입니다');
+    if (!user) {
+      const createUser = await this.usersRepository.save({
+        socialId: String(id),
+        provider,
+        nickname,
+        username,
+        displayName,
+      });
+
+      return createUser;
     }
 
-    const createUser = await this.usersRepository.save({
-      socialId: String(id),
-      provider,
-      nickname,
-      username,
-      displayName,
-    });
-
-    return createUser;
+    return user;
   }
 
   async generateAccessToken(userId: number) {
-    const payload = { sub: userId };
+    const payload = { sub: { userId, type: 'accessToken' } };
     return {
       accessToken: await this.jwtService.signAsync(payload),
     };
@@ -52,7 +52,7 @@ export class AuthService {
 
   async generateRefreshToken(userId: number) {
     const user = await this.usersRepository.findOne({ where: { id: userId } });
-    const payload = { sub: userId };
+    const payload = { sub: { userId, type: 'refreshToken' } };
     const refreshToken = await this.jwtService.signAsync(payload);
     user.refreshToken = refreshToken;
 
