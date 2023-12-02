@@ -1,3 +1,11 @@
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsBoolean,
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -10,14 +18,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Groups } from './Groups';
-import { Users } from './Users';
+import { Customs } from './Customs';
 import { GroupMembers } from './GroupMembers';
+import { Groups } from './Groups';
+import { Meals } from './Meals';
 import { Showers } from './Showers';
 import { Toilets } from './Toilets';
+import { Users } from './Users';
 import { Walks } from './Walks';
-import { Meals } from './Meals';
-import { Customs } from './Customs';
 
 enum PetType {
   dog = 'dog',
@@ -59,24 +67,21 @@ export class Pets {
   @OneToMany(() => Customs, (customs) => customs.pets)
   customs: Customs[];
 
-  // @OneToMany(() => Walks, (walks) => walks.Pet)
-  // Walks: Walks[];
-
-  // @OneToMany(() => Meals, (meals) => meals.Pet)
-  // Meals: Meals[];
-
-  // @OneToMany(() => Toilets, (toilets) => toilets.Pet)
-  // Toilets: Toilets[];
-
-  // @OneToMany(() => Showers, (showers) => showers.Pet)
-  // Showers: Showers[];
-
-  // @OneToMany(() => Customs, (customs) => customs.Pet)
-  // Customs: Customs[];
-
+  @IsString()
+  @ApiProperty({
+    example: '연두',
+    description: '강아지 이름',
+    required: true,
+  })
   @Column('varchar', { name: 'name', unique: false, length: 30 })
   name: string;
 
+  @IsEnum(PetType)
+  @ApiProperty({
+    example: 'dog',
+    description: '애완동물 유형(강아지 or 고양이)',
+    required: true,
+  })
   @Column({
     type: 'enum',
     enum: PetType,
@@ -85,23 +90,49 @@ export class Pets {
   })
   type: PetType;
 
+  @IsString()
+  @ApiProperty({
+    example: '말티즈',
+    description: '애완동물 종',
+    required: true,
+  })
   @Column('varchar', { name: 'kind' })
   kind: string;
 
+  @IsDateString()
+  @ApiProperty({
+    example: '2023-01-01',
+    description: '애완동물 생년월일',
+    required: true,
+  })
   @Column('date', { name: 'age' })
   age: Date;
 
+  @IsBoolean()
+  @ApiProperty({
+    description: '애완동물 중성화 유무',
+    required: true,
+  })
   @Column('boolean', { name: 'is_neutering_surgery' })
   isNeuteringSurgery: boolean;
 
+  @IsEnum(PetGender)
+  @ApiProperty({
+    example: 'male',
+    description: '애완동물 성별',
+    required: true,
+  })
   @Column('enum', { enum: PetGender, name: 'gender' })
   gender: PetGender;
 
+  @IsNumber()
+  @ApiProperty({
+    example: '2',
+    description: '애완동물 무게(kg)',
+    required: true,
+  })
   @Column('int', { name: 'weight' })
   weight: number;
-
-  @Column('varchar', { name: 'image' })
-  image: string;
 
   @CreateDateColumn()
   createdAt: Date;

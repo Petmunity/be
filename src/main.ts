@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './httpException.filter';
 import { ValidationPipe } from '@nestjs/common';
-import * as passport from 'passport';
+import passport from 'passport';
 
 declare const module: any;
 

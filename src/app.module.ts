@@ -16,9 +16,11 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
 import { GroupMembers } from './entities/GroupMembers';
+import { PetsModule } from './pets/pets.module';
 
 @Module({
   imports: [
+    PetsModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
@@ -41,11 +43,11 @@ import { GroupMembers } from './entities/GroupMembers';
         GroupMembers,
       ],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: true,
       charset: 'utf8mb4',
     }),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([Users, Pets, Groups]),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, UsersService],
