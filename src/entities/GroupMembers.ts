@@ -1,5 +1,4 @@
 import {
-  Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
@@ -7,26 +6,23 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Pets } from './Pets';
-import { Users } from './Users';
 import { Groups } from './Groups';
+import { Users } from './Users';
+import { Pets } from './Pets';
 
-@Entity({ schema: 'Petmmunity', name: 'customs' })
-export class Customs {
+@Entity({ schema: 'Petmmunity', name: 'GroupMembers' })
+export class GroupMembers {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @ManyToOne(() => Users, (users) => users.customs)
+  @ManyToOne(() => Users, (users) => users.groupMembers)
   users: Users;
 
-  @ManyToOne(() => Pets, (pets) => pets.customs)
+  @ManyToOne(() => Pets, (pets) => pets.groupMembers)
   pets: Pets;
 
-  @ManyToOne(() => Groups, (group) => group.customs)
+  @ManyToOne(() => Groups, (group) => group.groupMembers)
   groups: Groups;
-
-  @Column('varchar', { name: 'username', unique: false, length: 30 })
-  username: string;
 
   @CreateDateColumn()
   createdAt: Date;

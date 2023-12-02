@@ -9,18 +9,22 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Pets } from './Pets';
+import { Users } from './Users';
+import { Groups } from './Groups';
 
 @Entity({ schema: 'Petmmunity', name: 'walks' })
 export class Walks {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @ManyToOne(() => Pets, (pet) => pet.Walks, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'pet_id', referencedColumnName: 'id' }])
-  Pet: Pets;
+  @ManyToOne(() => Users, (users) => users.walks)
+  users: Users;
+
+  @ManyToOne(() => Pets, (pets) => pets.walks)
+  pets: Pets;
+
+  @ManyToOne(() => Groups, (group) => group.walks)
+  groups: Groups;
 
   @Column('int', { name: 'distance' })
   distance: number;

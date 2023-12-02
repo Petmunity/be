@@ -8,22 +8,47 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Pets } from './Pets';
+import { GroupMembers } from './GroupMembers';
 import { Groups } from './Groups';
+import { Showers } from './Showers';
+import { Toilets } from './Toilets';
+import { Walks } from './Walks';
+import { Meals } from './Meals';
+import { Customs } from './Customs';
 
 @Entity({ schema: 'Petmmunity', name: 'users' })
 export class Users {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @ManyToOne(() => Groups, (group) => group.Users, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'group_id', referencedColumnName: 'id' }])
-  Group: Groups;
+  @OneToMany(() => Pets, (pets) => pets.users)
+  pets: Pets[];
+
+  @OneToMany(() => Groups, (groups) => groups.users)
+  groups: Groups[];
+
+  @OneToMany(() => Showers, (showers) => showers.users)
+  showers: Showers[];
+
+  @OneToMany(() => GroupMembers, (groupMembers) => groupMembers.users)
+  groupMembers: GroupMembers[];
+
+  @OneToMany(() => Toilets, (toilets) => toilets.users)
+  toilets: Toilets[];
+
+  @OneToMany(() => Walks, (walks) => walks.users)
+  walks: Walks[];
+
+  @OneToMany(() => Meals, (meals) => meals.users)
+  meals: Meals[];
+
+  @OneToMany(() => Customs, (customs) => customs.users)
+  customs: Customs[];
 
   @IsString()
   @IsNotEmpty()

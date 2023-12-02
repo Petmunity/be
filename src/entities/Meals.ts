@@ -10,6 +10,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Pets } from './Pets';
+import { Users } from './Users';
+import { Groups } from './Groups';
 
 enum MealType {
   food,
@@ -21,12 +23,14 @@ export class Meals {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @ManyToOne(() => Pets, (pet) => pet.Meals, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'pet_id', referencedColumnName: 'id' }])
-  Pet: Pets;
+  @ManyToOne(() => Users, (users) => users.meals)
+  users: Users;
+
+  @ManyToOne(() => Pets, (pets) => pets.meals)
+  pets: Pets;
+
+  @ManyToOne(() => Groups, (group) => group.meals)
+  groups: Groups;
 
   @Column('varchar', { name: 'amount' })
   amount: string;

@@ -15,6 +15,7 @@ import { Walks } from './entities/Walks';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { GroupMembers } from './entities/GroupMembers';
 
 @Module({
   imports: [
@@ -28,9 +29,19 @@ import { UsersService } from './users/users.service';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [Users, Pets, Groups, Meals, Showers, Toilets, Walks, Customs],
+      entities: [
+        Users,
+        Pets,
+        Groups,
+        Meals,
+        Showers,
+        Toilets,
+        Walks,
+        Customs,
+        GroupMembers,
+      ],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
       logging: true,
       charset: 'utf8mb4',
     }),
