@@ -30,7 +30,7 @@ export class PetsController {
     await this.petsService.register({ ...body, userId: 13 });
   }
 
-  @UseGuards(new LoggedInGuard())
+  @UseGuards(LoggedInGuard)
   @ApiOperation({ summary: '유저 목록' })
   @Get()
   getUsers(@User() user) {
@@ -42,7 +42,7 @@ export class PetsController {
   @Post()
   async postSignUp(@Body() body: RegisterRequestDto) {}
 
-  @UseGuards(new LoggedInGuard())
+  @UseGuards(LoggedInGuard)
   @ApiOperation({ summary: '유저 상세' })
   @ApiParam({
     name: 'userId',
@@ -60,7 +60,7 @@ export class PetsController {
   @Post('login')
   postLogin() {}
 
-  @UseGuards(new LoggedInGuard())
+  @UseGuards(LoggedInGuard)
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
   postLogout(@Req() req, @Res() res) {

@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { KakaoStrategy } from './kakao.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { LoggedInGuard } from './logged-in-guard';
 
 @Module({
   imports: [
@@ -22,5 +23,6 @@ import { ConfigService } from '@nestjs/config';
   ],
   controllers: [AuthController],
   providers: [AuthService, KakaoStrategy],
+  exports: [LoggedInGuard],
 })
 export class AuthModule {}
