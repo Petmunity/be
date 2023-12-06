@@ -17,13 +17,14 @@ import { UndefinedToNullInterceptor } from 'src/common/interceptors/undefinedToN
 import { UsersService } from './users.service';
 import { NotLoggedInGuard } from 'src/auth/not-logged-in-guard';
 import { SignUpRequestDto } from './dto/signUp.request.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('Users')
 @Controller('v1/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
-  @UseGuards(new LoggedInGuard())
+  // @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '유저 목록' })
   @Get()
   getUsers(@User() user) {
@@ -41,7 +42,7 @@ export class UsersController {
     // );
   }
 
-  @UseGuards(new LoggedInGuard())
+  // @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '유저 상세' })
   @ApiParam({
     name: 'userId',
@@ -59,7 +60,7 @@ export class UsersController {
   @Post('login')
   postLogin() {}
 
-  @UseGuards(new LoggedInGuard())
+  // @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
   postLogout(@Req() req, @Res() res) {
