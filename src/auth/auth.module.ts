@@ -22,7 +22,7 @@ import { LoggedInGuard } from './logged-in-guard';
     TypeOrmModule.forFeature([Users]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, KakaoStrategy],
+  providers: [AuthService, KakaoStrategy, LoggedInGuard],
   exports: [LoggedInGuard],
 })
 export class AuthModule {}
