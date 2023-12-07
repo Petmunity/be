@@ -18,8 +18,9 @@ export class LoggedInGuard implements CanActivate {
     }
 
     try {
-      const payload = this.jwtService.verify(token);
-      console.log('payload', payload);
+      const payload = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      });
       // 여기에서 필요한 추가 검증 로직을 수행할 수 있습니다.
       // 예를 들어, 토큰에서 얻은 사용자 ID를 기반으로 데이터베이스에서 사용자를 조회하고
       // 사용자가 존재하는지 등을 확인할 수 있습니다.

@@ -9,7 +9,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 import { LoggedInGuard } from 'src/auth/logged-in-guard';
 import { User } from 'src/common/decorators/user.decorator';
@@ -21,9 +26,10 @@ import { RegisterRequestDto } from './dto/request.dto';
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('Pets')
 @Controller('pets')
+@ApiBearerAuth('JWT-auth')
 export class PetsController {
   constructor(private petsService: PetsService) {}
-  //   @UseGuards(new LoggedInGuard())
+  @UseGuards(LoggedInGuard)
   @ApiOperation({ summary: '강아지 등록' })
   @Post('/register')
   async postRegister(@Body() body: RegisterRequestDto) {
