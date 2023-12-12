@@ -17,8 +17,8 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build the Docker image
-        run: docker build -t manaweb-api .
+        run: docker build -t petmmunity-nest .
       - name: taging
-        run: docker tag manaweb-api:latest mag123c/manaweb-api:latest
+        run: docker tag petmmunity-nest:latest qwe6293/petmmunity-nest:lastes
       - name: Push to Dockerhub
-        run: docker push mag123c/manaweb-api:latest
+        run: docker push qwe6293/petmmunity-nest:lastes
