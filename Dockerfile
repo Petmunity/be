@@ -1,9 +1,22 @@
-FROM node:21
-RUN mkdir -p /var/app
-WORKDIR /var/app
-COPY . .
+FROM node:21-alpine
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
-RUN npm run start
+
+# Copy the rest of the application code to the container
+COPY . .
+
+RUN npm run build
+
+# Expose the port that the Nest.js application will run on
 EXPOSE 3001
-EXPOSE 3306
-CMD ["node", "dist/src/main.js"]
+
+# Start the Nest.js application
+CMD [ "node", "dist/main.js" ]
+# CMD ["npm", "start"]
