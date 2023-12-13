@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: deploy
 
 on:
   push:
@@ -22,3 +22,15 @@ jobs:
         run: docker tag petmmunity-nest:latest qwe6293/petmmunity-nest:lastes
       - name: Push to Dockerhub
         run: docker push qwe6293/petmmunity-nest:lastes
+      - name: execute remote ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            pwd
+            sudo docker pull qwe6293/petmmunity-nest:latest
+            sudo docker rm -f petmmunity-nest-container
+            sudo docker run -d -p 3001:3001 --name petmmunity-nest-container qwe6293/nest-container
