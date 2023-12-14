@@ -19,9 +19,9 @@ jobs:
       - name: Build the Docker image
         run: docker build -t petmmunity-nest .
       - name: taging
-        run: docker tag petmmunity-nest:1.0.1 qwe6293/petmmunity-nest:1.0.1
+        run: docker tag petmmunity-nest:latest qwe6293/petmmunity-nest:latest
       - name: Push to Dockerhub
-        run: docker push qwe6293/petmmunity-nest:1.0.1
+        run: docker push qwe6293/petmmunity-nest:latest
       # - name: execute remote ssh
       #   uses: appleboy/ssh-action@master
       #   with:
