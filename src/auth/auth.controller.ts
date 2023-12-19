@@ -35,9 +35,9 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken);
 
     if (user?.isOnboarding) {
-      res.redirect('http://localhost:3000/');
+      res.redirect('https://petmunity.duck-blog.info/');
     } else {
-      res.redirect('http://localhost:3000/onboarding');
+      res.redirect('https://petmunity.duck-blog.info/onboarding');
     }
   }
 }
